@@ -498,6 +498,12 @@ private NetworkTableEntry calcDist = subsystemShuffleboardTab.add("Calc Dist", 0
   @Override
   public void periodic() 
   {
-    
+    if (limelightTable.getEntry("led").getDouble(0) == 3) {
+    SmartDashboard.putNumber("Limelight y", getYCoord());
+    SmartDashboard.putNumber("Limelight x", getXCoord());
+    SmartDashboard.putNumber("Limelight Height", getVertical());
+    SmartDashboard.putNumber("Limelight Width", getHorizontal());
+    SmartDashboard.putNumber("Limelight Area", getArea());
+    }
   }
 }
