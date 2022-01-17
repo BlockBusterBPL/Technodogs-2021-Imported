@@ -52,7 +52,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   Limelight limelight = new Limelight();
   // numbers: Camera Height, Camera Angle, Target Height
-  LimelightPositionCalc llPosCalc = new LimelightPositionCalc(limelight, 2.5, 45, 8); // TODO: figure out these numbers
+  LimelightPositionCalc limePosCalc = new LimelightPositionCalc(limelight, 2.5, 45, 8); // TODO: figure out these numbers
 
 
   private ShuffleboardTab subsystemShuffleboardTab = Shuffleboard.getTab("Shooter Subsystem");
@@ -235,7 +235,7 @@ private NetworkTableEntry calcDist = subsystemShuffleboardTab.add("Calc Dist", 0
 
   public void shootAtVelocity()
   {
-    double distance = llPosCalc.calculate();
+    double distance = limePosCalc.calculate();
     calcDist.setDouble(distance);
     double targetVelocity = getTargetVelocity(distance);
     spinToSpeed(targetVelocity);

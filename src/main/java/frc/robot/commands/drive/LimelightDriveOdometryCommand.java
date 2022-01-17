@@ -16,7 +16,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import frc.lib.sensors.Limelight;
+import frc.lib.sensors.Limelight.LimeLedMode;
 import frc.robot.Constants;
 // import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.DriveOdometrySubsystem;
@@ -31,7 +32,7 @@ public class LimelightDriveOdometryCommand extends CommandBase {
   XboxController m_driverController = new XboxController(Constants.DriverControl.driverControllerPort);
   XboxController m_operatorController = new XboxController(Constants.OperatorControl.operatorControllerPort);
 
-  NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+  Limelight limelight = new Limelight();
 
   NetworkTableEntry horizontalEntry;
   double horizontal;
@@ -84,11 +85,10 @@ public class LimelightDriveOdometryCommand extends CommandBase {
     }
 
     if (m_driverController.getRawAxis(Constants.DriverControl.driverControllerRightTriggerAxis) > 0.2) {
-      limelightTable.getEntry("ledMode").setNumber(3); // set Limelight LED
+      limelight.setLED(LimeLedMode.ON); // set Limelight LED
 
       // find the center of target
-      horizontalEntry = limelightTable.getEntry("tx");
-      horizontal = horizontalEntry.getDouble(0);
+      horizontal = limelight.getHorizontalOffset();
       horizontal = horizontal - 2.9/* + limelightTable.getEntry("thor").getDouble(0) / 15 */;
 
       rotation = horizontal / 23.0;
@@ -138,9 +138,9 @@ public class LimelightDriveOdometryCommand extends CommandBase {
       }
     } else {
 
-      if (limelightTable.getEntry("ledMode").getDouble(0) == 3) // If limelight led is set on or timer is greater than 5
+      if (limelight.getLED() == LimeLedMode.ON) // If limelight led is set on or timer is greater than 5
       {
-        limelightTable.getEntry("ledMode").setDouble(1);
+        limelight.setLED(LimeLedMode.OFF);
         mDriveSubsystem.unsetAligned();
         m_operatorController.setRumble(RumbleType.kRightRumble, 0);
         m_operatorController.setRumble(RumbleType.kLeftRumble, 0);
