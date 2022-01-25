@@ -52,7 +52,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   Limelight limelight = new Limelight();
   // numbers: Camera Height, Camera Angle, Target Height
-  LimelightPositionCalc limePosCalc = new LimelightPositionCalc(limelight, 2.5, 45, 8); // TODO: figure out these numbers
+  LimelightPositionCalc limePosCalc = new LimelightPositionCalc(limelight, 2.125, 28.5, 8.75); // TODO: figure out these numbers
 
 
   private ShuffleboardTab subsystemShuffleboardTab = Shuffleboard.getTab("Shooter Subsystem");
