@@ -22,6 +22,7 @@ public class LimelightPositionCalc {
         this.limelight = limelight;
         this.lensHeight = lensHeight;
         this.lensElevation = lensElevation;
+        this.targetHeight = targetHeight;
     }
 
     /**
@@ -29,12 +30,8 @@ public class LimelightPositionCalc {
      * @return The distance if the target is visible, otherwise 0.
      */
     public double calculate() {
-        if (limelight.targetVisible()){
         double lensToTarget = limelight.getVerticalOffset();
-        double distance = (targetHeight-lensHeight) / Math.tan(lensElevation+lensToTarget);
+        double distance = (targetHeight-lensHeight) / Math.tan(Math.toRadians(lensElevation)+Math.toRadians(lensToTarget));
         return distance;
-        } else {
-            return 0;
-        }
     }
 }
