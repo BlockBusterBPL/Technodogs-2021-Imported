@@ -83,10 +83,10 @@ public class LimelightDriveOdometryCommand extends CommandBase {
     if  (zeroTime.get() >= 1) {
       this.mDriveSubsystem.zeroFO();
     }
-
+    boolean aimLime = false;
     if (m_driverController.getRawAxis(Constants.DriverControl.driverControllerRightTriggerAxis) > 0.2) {
       limelight.setLED(LimeLedMode.ON); // set Limelight LED
-
+      aimLime = true;
       // find the center of target
       horizontal = limelight.getHorizontalOffset();
       horizontal = horizontal - 2.9/* + limelightTable.getEntry("thor").getDouble(0) / 15 */;
@@ -108,7 +108,7 @@ public class LimelightDriveOdometryCommand extends CommandBase {
         m_operatorController.setRumble(RumbleType.kLeftRumble, 0);
       }
       
-      if (Math.abs(rotation) <= 0.09) // stop rotation and tell dashboard that the robot is aligned 0.015
+      if (Math.abs(rotation) <= 0.05) // stop rotation and tell dashboard that the robot is aligned 0.015
       {
         // this will be run when once the robot has aligned it self with the target
         rotation = 0;
@@ -125,14 +125,14 @@ public class LimelightDriveOdometryCommand extends CommandBase {
       // rotation = 0;
       // }
 
-      double controllerAssist = m_driverController.getRawAxis(Constants.DriverControl.driverControllerRightStickXAxis) / 15;
+      double controllerAssist = m_driverController.getRawAxis(Constants.DriverControl.driverControllerRightStickXAxis) / 4;
 
       // spin to center on target
 
       if (m_driverController.getXButton()) {
         // mDriveSubsystem.xMode();
       } else if (m_driverController.getRawAxis(Constants.DriverControl.driverControllerLeftTriggerAxis) > 0.2) {
-        mDriveSubsystem.drive(0, 0, -controllerAssist * 1.5, false);
+        mDriveSubsystem.drive(0, 0, -controllerAssist /* 1.5*/, false);
       } else {
         mDriveSubsystem.drive(0, 0, -rotation - controllerAssist, false);
       }
@@ -149,12 +149,26 @@ public class LimelightDriveOdometryCommand extends CommandBase {
       rotation = m_driverController.getRawAxis(Constants.DriverControl.driverControllerRightStickXAxis);
 
       // drive normally with joysticks
-      if (slowMode) {
-        this.mDriveSubsystem.drive(directionX / 2, directionY / 2, rotation / 2, fieldRelative);
+      if (!(m_driverController.getRawAxis(Constants.DriverControl.driverControllerLeftTriggerAxis) > 0.2)) {
+        if (!aimLime) {
+          limelight.setLED(LimeLedMode.OFF);
+        }
+        if (slowMode) {
+          this.mDriveSubsystem.drive(directionX / 2, directionY / 2, rotation / 2, fieldRelative);
+        } else {
+          this.mDriveSubsystem.drive(directionX, directionY, rotation, fieldRelative);
+        }
       } else {
-        this.mDriveSubsystem.drive(directionX, directionY, rotation, fieldRelative);
-      }
+        limelight.setLED(LimeLedMode.ON);
+        double limelightRotate = limelight.getHorizontalOffset() * 0.05;
+        if (slowMode) {
+          this.mDriveSubsystem.drive(directionX / 2, directionY / 2, limelightRotate, fieldRelative);
+        } else {
+          this.mDriveSubsystem.drive(directionX, directionY, limelightRotate, fieldRelative);
+        }
+      } 
     }
+    
   }
 
 }

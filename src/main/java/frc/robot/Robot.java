@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.lib.sensors.Limelight;
+import frc.lib.sensors.Limelight.LimeLedMode;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 /**
@@ -39,6 +41,7 @@ public class Robot extends TimedRobot {
   private NetworkTableEntry rlSwerveModuleAngleActual;
   private NetworkTableEntry rrSwerveModuleAngleActual;
   private ShuffleboardTab testShuffleboardTab;
+  private Limelight limelight = new Limelight();
 
   private RobotContainer robotContainer;
 
@@ -78,7 +81,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() 
   {
-
+    limelight.setLED(LimeLedMode.OFF);
     
     
 
