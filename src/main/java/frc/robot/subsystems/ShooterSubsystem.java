@@ -244,7 +244,7 @@ private NetworkTableEntry calcDist = subsystemShuffleboardTab.add("Calc Dist", 0
   }
 
   public double getTargetVelocity(double distance) {
-    double vel = (distance * 1000);
+    double vel = (distance * 500);
     // TODO: Make this equation
     return vel; // testing speed
   }
@@ -302,15 +302,15 @@ private NetworkTableEntry calcDist = subsystemShuffleboardTab.add("Calc Dist", 0
     if (limelight.getLED() == LimeLedMode.ON) {
       SmartDashboard.putNumber("Limelight VO", limelight.getVerticalOffset());
       SmartDashboard.putNumber("Limelight HO", limelight.getHorizontalOffset());
-      SmartDashboard.putNumber("Limelight Height", limelight.getTargetHeight());
-      SmartDashboard.putNumber("Limelight Width", limelight.getTargetWidth());
-      SmartDashboard.putNumber("Limelight Area", limelight.getTargetArea());
+      //SmartDashboard.putNumber("Limelight Height", limelight.getTargetHeight());
+      //SmartDashboard.putNumber("Limelight Width", limelight.getTargetWidth());
+      //SmartDashboard.putNumber("Limelight Area", limelight.getTargetArea());
 
       llXCoord.setDouble(limelight.getVerticalOffset());
       llYCoord.setDouble(limelight.getVerticalOffset());
-      llHoriz.setDouble(limelight.getTargetWidth());
-      llVert.setDouble(limelight.getTargetHeight());
-      llArea.setDouble(limelight.getTargetArea());
+      //llHoriz.setDouble(limelight.getTargetWidth());
+      //llVert.setDouble(limelight.getTargetHeight());
+      //llArea.setDouble(limelight.getTargetArea());
     }
 
     shooterLS.setDouble(leftShooterSensor.getIntegratedSensorVelocity());

@@ -108,13 +108,13 @@ public class LimelightDriveOdometryCommand extends CommandBase {
         m_operatorController.setRumble(RumbleType.kLeftRumble, 0);
       }
       
-      if (Math.abs(rotation) <= 0.05) // stop rotation and tell dashboard that the robot is aligned 0.015
+      if (Math.abs(rotation) <= 0.15) // stop rotation and tell dashboard that the robot is aligned 0.015
       {
         // this will be run when once the robot has aligned it self with the target
         rotation = 0;
         mDriveSubsystem.setAligned();
-        m_operatorController.setRumble(RumbleType.kRightRumble, 0.5);
-        m_operatorController.setRumble(RumbleType.kLeftRumble, 0.5);
+        //m_operatorController.setRumble(RumbleType.kRightRumble, 0.5);
+        //m_operatorController.setRumble(RumbleType.kLeftRumble, 0.5);
       }
 
       // Not needed from Jacob T. Save for later if desired
@@ -130,7 +130,7 @@ public class LimelightDriveOdometryCommand extends CommandBase {
       // spin to center on target
 
       if (m_driverController.getXButton()) {
-        // mDriveSubsystem.xMode();
+        mDriveSubsystem.xMode();
       } else if (m_driverController.getRawAxis(Constants.DriverControl.driverControllerLeftTriggerAxis) > 0.2) {
         mDriveSubsystem.drive(0, 0, -controllerAssist /* 1.5*/, false);
       } else {

@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import java.util.Map;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -46,6 +47,7 @@ public class DriveOdometrySubsystem extends SubsystemBase {
 
   // The gyro sensor
   private final Gyro m_gyro = new ADXRS450_Gyro();
+  //private final Gryo m_gyro = new ADIS16470_IMU();
 
   private Field2d v_Field2d = new Field2d();
 
@@ -378,6 +380,15 @@ public class DriveOdometrySubsystem extends SubsystemBase {
 
   public void unsetAligned() {
     sbDriveAligned.setBoolean(false);
+  }
+
+  public void xMode() {
+    SwerveModuleState[] states = new SwerveModuleState[4];
+    states[0] = new SwerveModuleState(0, Rotation2d.fromDegrees(135)); //2
+    states[1] = new SwerveModuleState(0, Rotation2d.fromDegrees(45)); //0
+    states[2] = new SwerveModuleState(0, Rotation2d.fromDegrees(45)); //3
+    states[3] = new SwerveModuleState(0, Rotation2d.fromDegrees(135)); //1
+    setModuleStates(states);
   }
 
 }
